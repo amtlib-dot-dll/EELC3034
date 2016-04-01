@@ -112,7 +112,7 @@ int main() {
     printf("\nData read: ");
     for (i = 0; i <= 2; i++) {
         b_buffer[i] = rd_24c01(i);
-        printf("%bX", b_buffer[i]);
+        printf("%.2bX", b_buffer[i]);
         delay(250);
     }
 
