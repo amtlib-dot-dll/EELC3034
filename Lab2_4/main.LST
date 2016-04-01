@@ -1,0 +1,44 @@
+C51 COMPILER V8.18   MAIN                                                                  03/10/2016 10:54:05 PAGE 1   
+
+
+C51 COMPILER V8.18, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <stdio.h>
+   3          
+   4          #include "init_serial.h"
+   5          
+   6          int main() {
+   7   1              init_serial();
+   8   1      
+   9   1              TMOD = (TMOD & 0xf0) | 0x2;
+  10   1              TH0 = -200;
+  11   1              TL0 = -200;
+  12   1              EA = 1;
+  13   1              ET0 = 1;
+  14   1              TR0 = 1;
+  15   1      
+  16   1              for (; ; );
+  17   1      }
+  18          
+  19          void time0_int(void) interrupt 1 {
+  20   1              printf("interr\n");
+  21   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     90    ----
+   CONSTANT SIZE    =      8    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

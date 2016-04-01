@@ -1,0 +1,95 @@
+C51 COMPILER V8.18   MAIN                                                                  03/17/2016 11:07:39 PAGE 1   
+
+
+C51 COMPILER V8.18, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <stdio.h>
+   3          #include <intrins.h>
+   4          #include <absacc.h>
+   5          
+   6          #include "init_serial.h"
+   7          
+   8          void delay(int x) {
+   9   1              while (x >= 0) {
+  10   2                      x--;
+  11   2              }
+  12   1      }
+  13          
+  14          unsigned char d[6] _at_ 0x50;
+  15          
+  16          #define SEGMENT XBYTE[0x7f80]
+  17          #define BIT_LED XBYTE[0x7f90]
+  18          
+  19          unsigned char code seg_code[] = {
+  20                  0x3f,
+  21                  0x06,
+  22                  0x5b,
+  23                  0x4f,
+  24                  0x66,
+  25                  0x6d,
+  26                  0x7d,
+  27                  0x07,
+  28                  0x7f,
+  29                  0x67,
+  30                  0x77,
+  31                  0x7c,
+  32                  0x39,
+  33                  0x5e,
+  34                  0x79,
+  35                  0x71,
+  36                  0x00
+  37          };
+  38          
+  39          
+  40          int main() {
+  41   1              unsigned char i, display_bit;
+  42   1              init_serial();
+  43   1      
+  44   1              for (i = 0; i <= 5; i++) {
+  45   2                      d[i] = i + 1;
+  46   2              }
+  47   1      
+  48   1              _nop_();
+  49   1      
+  50   1              display_bit = 1;
+  51   1              i = 0;
+  52   1      
+  53   1              while (i <= 5) {
+  54   2                      SEGMENT = seg_code[d[i]];
+  55   2                      BIT_LED = display_bit;
+C51 COMPILER V8.18   MAIN                                                                  03/17/2016 11:07:39 PAGE 2   
+
+  56   2                      printf("%bx", d[i]);
+  57   2                      delay(3);
+  58   2                      BIT_LED = 0;
+  59   2                      display_bit <<= 1;
+  60   2                      if (display_bit > 32) {
+  61   3                              display_bit = 1;
+  62   3                      }
+  63   2                      i++;
+  64   2                      if (i >= 6) {
+  65   3                              i = 0;
+  66   3                              printf("\n");
+  67   3                      }
+  68   2              }
+  69   1      }
+*** WARNING C290 IN LINE 69 OF MAIN.C: missing return value
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    136    ----
+   CONSTANT SIZE    =     23    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

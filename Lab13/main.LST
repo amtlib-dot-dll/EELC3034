@@ -1,0 +1,153 @@
+C51 COMPILER V8.18   MAIN                                                                  03/31/2016 11:38:58 PAGE 1   
+
+
+C51 COMPILER V8.18, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c INTVECTOR(0X8000) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <stdio.h>
+   3          #include <absacc.h>
+   4          #include <intrins.h>
+   5          
+   6          #include "init_serial.h"
+   7          
+   8          sbit SCL_IC_CARD = P1^0;
+   9          sbit SDA_IC_CARD = P1^1;
+  10          sbit WP_IC_CARD = P1^2;
+  11          
+  12          bdata char com_data;
+  13          sbit mos_bit = com_data^7;
+  14          sbit low_bit = com_data^0;
+  15          
+  16          unsigned char data display_buffer[3] _at_ 0x40;
+  17          
+  18          unsigned char data b_buffer[3] _at_ 0x50;
+  19          unsigned char idata a_buffer[6] _at_ 0xc5;
+  20          
+  21          void delay(int n) {
+  22   1          int i;
+  23   1          for (i = 0; i < n; i++);
+  24   1      }
+  25          
+  26          void start(void) {
+  27   1          SDA_IC_CARD = 1;
+  28   1          SCL_IC_CARD = 1;
+  29   1          SDA_IC_CARD = 0;
+  30   1          SCL_IC_CARD = 0;
+  31   1      }
+  32          
+  33          void stop(void) {
+  34   1          SDA_IC_CARD = 0;
+  35   1          SCL_IC_CARD = 1;
+  36   1          SDA_IC_CARD = 1;
+  37   1      }
+  38          
+  39          void ack(void) {
+  40   1          SCL_IC_CARD = 1;
+  41   1          SCL_IC_CARD = 0;
+  42   1      }
+  43          
+  44          void shift8(char a) {
+  45   1          data unsigned char i;
+  46   1          com_data = a;
+  47   1          for (i = 0; i < 8; i++) {
+  48   2              SDA_IC_CARD = mos_bit;
+  49   2              SCL_IC_CARD = 1;
+  50   2              SCL_IC_CARD = 0;
+  51   2              com_data *= 2;
+  52   2          }
+  53   1      }
+  54          
+  55          unsigned char rd_24c01(char a) {
+C51 COMPILER V8.18   MAIN                                                                  03/31/2016 11:38:58 PAGE 2   
+
+  56   1          data unsigned char i, command;
+  57   1          SDA_IC_CARD = 1;
+  58   1          SCL_IC_CARD = 0;
+  59   1          start();
+  60   1          command = 0xa0;
+  61   1          shift8(command);
+  62   1          ack();
+  63   1          shift8(a);
+  64   1          ack();
+  65   1          start();
+  66   1          command = 0xa1;
+  67   1          shift8(command);
+  68   1          ack();
+  69   1          SDA_IC_CARD = 1;
+  70   1          for (i = 0; i < 8; i++) {
+  71   2              com_data *= 2;
+  72   2              SCL_IC_CARD = 1;
+  73   2              low_bit = SDA_IC_CARD;
+  74   2              SCL_IC_CARD = 0;
+  75   2          }
+  76   1          stop();
+  77   1          return com_data;
+  78   1      }
+  79          
+  80          void wr_24c01(char a, char b) {
+  81   1          data unsigned char command;
+  82   1          WP_IC_CARD = 0;
+  83   1          _nop_();
+  84   1          SDA_IC_CARD = 1;
+  85   1          SCL_IC_CARD = 0;
+  86   1          start();
+  87   1          command = 0xa0;
+  88   1          shift8(command);
+  89   1          ack();
+  90   1          shift8(a);
+  91   1          ack();
+  92   1          shift8(b);
+  93   1          ack();
+  94   1          stop();
+  95   1          _nop_();
+  96   1          WP_IC_CARD = 1;
+  97   1      }
+  98          
+  99          int main() {
+ 100   1          unsigned char i;
+ 101   1          unsigned char (*r)();
+ 102   1          init_serial();
+ 103   1          WP_IC_CARD = 1;
+ 104   1          r = 0x13c1;
+ 105   1          printf("\n");
+ 106   1      
+ 107   1          for (i = 0; i <= 2; i++) {
+ 108   2              wr_24c01(i, display_buffer[i]);
+ 109   2              delay(250);
+ 110   2          }
+ 111   1      
+ 112   1          printf("\nData read: ");
+ 113   1          for (i = 0; i <= 2; i++) {
+ 114   2              b_buffer[i] = rd_24c01(i);
+ 115   2              printf("%bX", b_buffer[i]);
+ 116   2              delay(250);
+ 117   2          }
+C51 COMPILER V8.18   MAIN                                                                  03/31/2016 11:38:58 PAGE 3   
+
+ 118   1      
+ 119   1          for (; ;) {
+ 120   2              for (i = 0; i <= 2; i++) {
+ 121   3                  a_buffer[2 * i] = (b_buffer[i] & 0xf0) >> 4;
+ 122   3                  a_buffer[2 * i + 1] = b_buffer[i] & 0xf;
+ 123   3              }
+ 124   2              r();
+ 125   2          }
+ 126   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    334    ----
+   CONSTANT SIZE    =     19    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

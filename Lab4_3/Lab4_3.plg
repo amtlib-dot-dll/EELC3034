@@ -1,0 +1,24 @@
+<html>
+<body>
+<pre>
+<h1>µVision3 Build Log</h1>
+<h2>Project:</h2>
+D:\2120000000\Lab4_3\Lab4_3.uv2
+Project File Date:  03/17/2016
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling init_serial.c...
+compiling main.c...
+MAIN.C(11): warning C206: '_nop_': missing function-prototype
+MAIN.C(11): error C264: intrinsic '_nop_': declaration/activation error
+Target not created
+Build target 'Target 1'
+compiling init_serial.c...
+compiling main.c...
+linking...
+Program Size: data=33.1 xdata=0 code=1190
+"Lab4_3" - 0 Error(s), 0 Warning(s).
+</pre>
+</body>
+</html>

@@ -1,0 +1,164 @@
+C51 COMPILER V8.18   MAIN                                                                  03/31/2016 10:26:09 PAGE 1   
+
+
+C51 COMPILER V8.18, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c INTVECTOR(0X8000) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #define EXTRA 1
+   2          #include <reg51.h>
+   3          #include <stdio.h>
+   4          #include <absacc.h>
+   5          #include <intrins.h>
+   6          
+   7          #include "init_serial.h"
+   8          
+   9          sbit TMDAT = P1^0;
+  10          
+  11          #define SEGMENT (XBYTE[0x7f80])
+  12          #define BIT_LED (XBYTE[0x7f90])
+  13          
+  14          unsigned char code seg_code[] = {0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x67, 0x77, 0x7c, 0
+             -x39, 0x5e, 0x79, 0x71, 0x00};
+  15          
+  16          void dmsec(unsigned int count) {
+  17   1          unsigned int i;
+  18   1          while (count--) {
+  19   2              for (i = 0; i < 125; i++);
+  20   2          }
+  21   1      }
+  22          
+  23          void tmreset(void) {
+  24   1          unsigned int i;
+  25   1          TMDAT = 0;
+  26   1          i = 103;
+  27   1          for (; i > 0; i--);
+  28   1          TMDAT = 1;
+  29   1          i = 4;
+  30   1          for (; i > 0; i--);
+  31   1      }
+  32          
+  33          void tmpre(void) {
+  34   1          unsigned int i;
+  35   1          while (TMDAT);
+  36   1          while (~TMDAT);
+  37   1          i = 4;
+  38   1          for (; i > 0; i--);
+  39   1      }
+  40          
+  41          bit tmrbit(void) {
+  42   1          unsigned int i;
+  43   1          bit dat;
+  44   1          TMDAT = 0;
+  45   1          i++;
+  46   1          TMDAT = 1;
+  47   1          i++;
+  48   1          i++;
+  49   1          dat = TMDAT;
+  50   1          i = 8;
+  51   1          for (; i > 0; i--);
+  52   1          return dat;
+  53   1      }
+  54          
+C51 COMPILER V8.18   MAIN                                                                  03/31/2016 10:26:09 PAGE 2   
+
+  55          unsigned char tmrbyte(void) {
+  56   1          unsigned char i, j, dat;
+  57   1          dat = 0;
+  58   1          for (i = 0; i < 8; i++) {
+  59   2              j = tmrbit();
+  60   2              dat = j << 7 | dat >> 1;
+  61   2          }
+  62   1          return dat;
+  63   1      }
+  64          
+  65          void tmwbyte(unsigned char dat) {
+  66   1          unsigned int i;
+  67   1          unsigned char j;
+  68   1          bit testb;
+  69   1          for (j = 0; j < 8; j++) {
+  70   2              testb = dat & 1;
+  71   2              dat >>= 1;
+  72   2              if (testb) {
+  73   3                  TMDAT = 0;
+  74   3                  i++;
+  75   3                  i++;
+  76   3                  TMDAT = 1;
+  77   3                  i = 8;
+  78   3                  for (; i > 0; i--);
+  79   3              } else {
+  80   3                  TMDAT = 0;
+  81   3                  i = 8;
+  82   3                  for (; i > 0; i--);
+  83   3                  TMDAT = 1;
+  84   3                  i++;
+  85   3                  i++;
+  86   3              }
+  87   2          }
+  88   1      }
+  89          
+  90          void tmstart(void) {
+  91   1          tmreset();
+  92   1          tmpre();
+  93   1          dmsec(1);
+  94   1          tmwbyte(0xcc);
+  95   1          tmwbyte(0x44);
+  96   1      }
+  97          
+  98          unsigned int tmrtemp(void) {
+  99   1          unsigned char a, b;
+ 100   1          tmreset();
+ 101   1          tmpre();
+ 102   1          dmsec(1);
+ 103   1          tmwbyte(0xcc);
+ 104   1          tmwbyte(0xbe);
+ 105   1          a = tmrbyte();
+ 106   1          b = tmrbyte();
+ 107   1          return b << 8 | a;
+ 108   1      }
+ 109          
+ 110          int main() {
+ 111   1          unsigned int last;
+ 112   1              unsigned char (*p)();
+ 113   1              unsigned char* display_buffer;
+ 114   1      
+ 115   1              display_buffer = 0xc5;
+ 116   1              p = 0x13c1;
+C51 COMPILER V8.18   MAIN                                                                  03/31/2016 10:26:09 PAGE 3   
+
+ 117   1      
+ 118   1          init_serial();
+ 119   1      
+ 120   1          for (; ;) {
+ 121   2              dmsec(1);
+ 122   2              tmstart();
+ 123   2              dmsec(1);
+ 124   2              last = tmrtemp();
+ 125   2      #if !EXTRA
+                      printf("The current temperature: %u\n", last);
+              #endif
+ 128   2                      display_buffer[2] = (char)((double)(last % 16) / 16 * 10);
+ 129   2                      last /= 16;
+ 130   2                      display_buffer[1] = (last % 10) | 0x80;
+ 131   2                      last /= 10;
+ 132   2                      display_buffer[0] = last % 10;
+ 133   2                      last /= 10;
+ 134   2                      p();
+ 135   2          }
+ 136   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    452    ----
+   CONSTANT SIZE    =     17    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       8
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       2
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

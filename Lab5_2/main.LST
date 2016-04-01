@@ -1,0 +1,64 @@
+C51 COMPILER V8.18   MAIN                                                                  03/17/2016 10:52:50 PAGE 1   
+
+
+C51 COMPILER V8.18, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <stdio.h>
+   3          #include <intrins.h>
+   4          
+   5          #include "init_serial.h"
+   6          
+   7          unsigned char (*read_key)();
+   8          
+   9          unsigned char x _at_ 0x20;
+  10          unsigned char y _at_ 0x21;
+  11          unsigned int z _at_ 0x30;
+  12          
+  13          int main() {
+  14   1              unsigned char w;
+  15   1              init_serial();
+  16   1              read_key = 0x135a;
+  17   1      
+  18   1              for (; ; ) {
+  19   2                      x = 0xed;
+  20   2                      y = 0x5a;
+  21   2                      read_key();
+  22   2                      w = ACC;
+  23   2                      switch (w) {
+  24   3                              case 0:
+  25   3                                      z = x + y;
+  26   3                                      break;
+  27   3                              case 1:
+  28   3                                      z = x - y;
+  29   3                                      break;
+  30   3                              case 2:
+  31   3                                      z = x * y;
+  32   3                                      break;
+  33   3                              case 3:
+  34   3                                      z = x / y;
+  35   3                                      break;
+  36   3                              default:
+  37   3                                      z = 0;
+  38   3                      }
+  39   2                      printf("z = %x\n", z);
+  40   2              }
+  41   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    113    ----
+   CONSTANT SIZE    =      8    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,48 @@
+C51 COMPILER V8.18   MAIN                                                                  03/17/2016 10:16:00 PAGE 1   
+
+
+C51 COMPILER V8.18, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <stdio.h>
+   3          #include <intrins.h>
+   4          
+   5          #include "init_serial.h"
+   6          
+   7          unsigned char x _at_ 0x20;
+   8          unsigned int y _at_ 0x30;
+   9          
+  10          int main() {
+  11   1              init_serial();
+  12   1              _nop_();
+  13   1      
+  14   1              y = x / 100;
+  15   1              x %= 100;
+  16   1              y <<= 4;
+  17   1              y += x / 10;
+  18   1              x %= 10;
+  19   1              y <<= 4;
+  20   1              y += x;
+  21   1      
+  22   1              printf("y = %x\n", y);
+  23   1      
+  24   1              for (; ; );
+  25   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    111    ----
+   CONSTANT SIZE    =      8    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,48 @@
+C51 COMPILER V8.18   MAIN                                                                  03/17/2016 10:10:38 PAGE 1   
+
+
+C51 COMPILER V8.18, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <stdio.h>
+   3          
+   4          #include "init_serial.h"
+   5          
+   6          sbit T = P1^0;
+   7          sbit U = P1^1;
+   8          sbit V = P1^2;
+   9          sbit W = P1^3;
+  10          sbit X = P1^4;
+  11          sbit Y = P1^5;
+  12          sbit Z = P1^6;
+  13          
+  14          unsigned char bdata F _at_ 0x24;
+  15          sbit Q = F^0;
+  16          
+  17          int main() {
+  18   1              init_serial();
+  19   1              P1 = 0xff;
+  20   1              Q = (U && (!(V || W))) || (X && Y) || Z || !T;
+  21   1      
+  22   1              printf("x = %#bX\n", (char)F);
+  23   1      
+  24   1              for (; ; );
+  25   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     47    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

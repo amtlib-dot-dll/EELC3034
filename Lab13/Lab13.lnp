@@ -1,0 +1,7 @@
+".\JXSTARTUP.obj",
+"main.obj",
+"init_serial.obj" 
+TO "Lab13" 
+RAMSIZE(256) 
+CODE( 0X8000-0X9FFE )
+XDATA( 0XE000-0XFFFE )

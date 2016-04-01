@@ -1,0 +1,229 @@
+BL51 BANKED LINKER/LOCATER V6.20                                                        03/17/2016  11:25:37  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.20, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE .\JXSTARTUP.obj, init_serial.obj, main.obj TO Lab6 RAMSIZE (256) CODE (0X8000-0X9FFE) XDATA (0X
+>> E000-0XFFFE)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\JXSTARTUP.obj (?C_STARTUP)
+  init_serial.obj (INIT_SERIAL)
+  main.obj (MAIN)
+  C:\KEIL\C51\LIB\C51S.LIB (PRINTF)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CLDPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CSTPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?PLDIIDATA)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CCASE)
+  C:\KEIL\C51\LIB\C51S.LIB (PUTCHAR)
+
+
+LINK MAP OF MODULE:  Lab6 (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0016H     UNIT         _DATA_GROUP_
+                    001EH     0002H                  *** GAP ***
+            BIT     0020H.0   0001H.1   UNIT         _BIT_GROUP_
+                    0021H.1   0000H.7                *** GAP ***
+            IDATA   0022H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+                    0000H     8000H                  *** GAP ***
+            CODE    8000H     0003H     ABSOLUTE     
+            CODE    8003H     035CH     UNIT         ?PR?PRINTF?PRINTF
+            CODE    835FH     008EH     UNIT         ?C?LIB_CODE
+            CODE    83EDH     003FH     UNIT         ?PR?MAIN?MAIN
+            CODE    842CH     0027H     UNIT         ?PR?PUTCHAR?PUTCHAR
+            CODE    8453H     0014H     UNIT         ?PR?_DELAY?MAIN
+            CODE    8467H     000FH     UNIT         ?PR?INIT_SERIAL?INIT_SERIAL
+            CODE    8476H     000CH     UNIT         ?C_C51STARTUP
+            CODE    8482H     0009H     UNIT         ?CO?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   Lab6 (?C_STARTUP)
+
+
+SEGMENT                                BIT_GROUP          DATA_GROUP 
+  +--> CALLED SEGMENT               START    LENGTH     START    LENGTH
+-----------------------------------------------------------------------
+?C_C51STARTUP                       -----    -----      -----    -----
+  +--> ?PR?MAIN?MAIN
+
+BL51 BANKED LINKER/LOCATER V6.20                                                      03/17/2016  11:25:37  PAGE 2
+
+
+?PR?MAIN?MAIN                       -----    -----      0008H    0002H
+  +--> ?PR?INIT_SERIAL?INIT_SERIAL
+  +--> ?CO?MAIN
+  +--> ?PR?PRINTF?PRINTF
+  +--> ?PR?_DELAY?MAIN
+
+?PR?PRINTF?PRINTF                   0020H.0  0001H.1    000AH    0014H
+  +--> ?PR?PUTCHAR?PUTCHAR
+
+
+
+SYMBOL TABLE OF MODULE:  Lab6 (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:8476H         SEGMENT       ?C_C51STARTUP
+  I:0022H         SEGMENT       ?STACK
+  C:8000H         PUBLIC        ?C_STARTUP
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:8479H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0000H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:0081H         SYMBOL        SP
+  C:8476H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:8000H         LINE#         80
+  C:8476H         LINE#         87
+  C:8478H         LINE#         88
+  C:8479H         LINE#         89
+  C:847AH         LINE#         90
+  C:847CH         LINE#         139
+  C:847FH         LINE#         140
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        INIT_SERIAL
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:8467H         PUBLIC        init_serial
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:008DH         PUBLIC        TH1
+  B:0088H.6       PUBLIC        TR1
+BL51 BANKED LINKER/LOCATER V6.20                                                      03/17/2016  11:25:37  PAGE 3
+
+
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          INIT_SERIAL
+  C:8467H         LINE#         3
+  C:8467H         LINE#         4
+  C:846AH         LINE#         5
+  C:846DH         LINE#         6
+  C:8470H         LINE#         7
+  C:8473H         LINE#         8
+  C:8475H         LINE#         9
+  -------         ENDPROC       INIT_SERIAL
+  -------         ENDMOD        INIT_SERIAL
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  C:8457H         PUBLIC        _delay
+  D:00B8H         PUBLIC        IP
+  C:83EDH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:00B0H.3       PUBLIC        clk
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  C:8453H         SYMBOL        L?0012
+  -------         PROC          L?0011
+  -------         ENDPROC       L?0011
+  C:8453H         SYMBOL        L?0012
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        x
+  C:8457H         LINE#         7
+  C:8457H         LINE#         8
+  C:845FH         LINE#         9
+  C:8464H         LINE#         10
+  C:8466H         LINE#         11
+  -------         ENDPROC       _DELAY
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        x
+  D:0009H         SYMBOL        i
+  -------         ENDDO         
+  C:83EDH         LINE#         15
+  C:83EDH         LINE#         16
+  C:83F0H         LINE#         17
+  C:83F2H         LINE#         18
+  C:83F5H         LINE#         19
+  C:83F8H         LINE#         21
+  C:83F8H         LINE#         22
+  C:83FBH         LINE#         23
+  C:83FEH         LINE#         24
+  C:8400H         LINE#         25
+  C:8401H         LINE#         26
+  C:8403H         LINE#         27
+  C:840FH         LINE#         28
+  C:8415H         LINE#         29
+BL51 BANKED LINKER/LOCATER V6.20                                                      03/17/2016  11:25:37  PAGE 4
+
+
+  C:8418H         LINE#         30
+  C:841BH         LINE#         31
+  C:841EH         LINE#         32
+  C:8427H         LINE#         33
+  C:842AH         LINE#         34
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        PRINTF
+  D:000AH         PUBLIC        ?_PRINTF517?BYTE
+  D:000AH         PUBLIC        ?_PRINTF?BYTE
+  D:000AH         PUBLIC        ?_SPRINTF517?BYTE
+  D:000AH         PUBLIC        ?_SPRINTF?BYTE
+  C:8065H         PUBLIC        _PRINTF
+  C:8065H         PUBLIC        _PRINTF517
+  C:805FH         PUBLIC        _SPRINTF
+  C:805FH         PUBLIC        _SPRINTF517
+  -------         ENDMOD        PRINTF
+
+  -------         MODULE        ?C?CLDPTR
+  C:835FH         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CLDOPTR
+  C:8378H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?CSTPTR
+  C:83A5H         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+
+  -------         MODULE        ?C?PLDIIDATA
+  C:83B7H         PUBLIC        ?C?PLDIIDATA
+  -------         ENDMOD        ?C?PLDIIDATA
+
+  -------         MODULE        ?C?CCASE
+  C:83C7H         PUBLIC        ?C?CCASE
+  -------         ENDMOD        ?C?CCASE
+
+  -------         MODULE        PUTCHAR
+  C:842CH         PUBLIC        _PUTCHAR
+  -------         ENDMOD        PUTCHAR
+
+Program Size: data=32.1 xdata=0 code=1163
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

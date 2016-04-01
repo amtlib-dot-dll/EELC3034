@@ -1,0 +1,377 @@
+C51 COMPILER V8.18   MAIN                                                                  03/25/2016 17:35:28 PAGE 1   
+
+
+C51 COMPILER V8.18, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c INTVECTOR(0X8000) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <at89x52.h>
+   2          #include <stdio.h>
+   3          #include <absacc.h>
+   4          #include <intrins.h>
+   5          
+   6          #define SEGMENT (XBYTE[0x7f80])
+   7          #define BIT_LED (XBYTE[0x7f90])
+   8          #define FOSC 11.0592
+   9          #define TIME0 2500
+  10          
+  11          unsigned char data display_bit, display_buffer[8], time0_h, time0_l, temp;
+  12          unsigned int idata time0_times;
+  13          
+  14          unsigned char get_code(unsigned char i) {
+  15   1          switch (i) {
+  16   2              case 0:
+  17   2                  return 0x3f;
+  18   2              case 1:
+  19   2                  return 0x06;
+  20   2              case 2:
+  21   2                  return 0x5b;
+  22   2              case 3:
+  23   2                  return 0x4f;
+  24   2              case 4:
+  25   2                  return 0x66;
+  26   2              case 5:
+  27   2                  return 0x6d;
+  28   2              case 6:
+  29   2                  return 0x7d;
+  30   2              case 7:
+  31   2                  return 0x07;
+  32   2              case 8:
+  33   2                  return 0x7f;
+  34   2              case 9:
+  35   2                  return 0x67;
+  36   2              case 10:
+  37   2                  return 0x77;
+  38   2              case 11:
+  39   2                  return 0x7c;
+  40   2              case 12:
+  41   2                  return 0x39;
+  42   2              case 13:
+  43   2                  return 0x5e;
+  44   2              case 14:
+  45   2                  return 0x79;
+  46   2              case 15:
+  47   2                  return 0x71;
+  48   2              default:
+  49   2                  return 0;
+  50   2          }
+  51   1      }
+  52          
+  53          void display(void) {
+  54   1          unsigned char i;
+  55   1          switch (display_bit) {
+C51 COMPILER V8.18   MAIN                                                                  03/25/2016 17:35:28 PAGE 2   
+
+  56   2              case 1:
+  57   2                  i = 0;
+  58   2                  break;
+  59   2              case 2:
+  60   2                  i = 1;
+  61   2                  break;
+  62   2              case 4:
+  63   2                  i = 2;
+  64   2                  break;
+  65   2              case 8:
+  66   2                  i = 3;
+  67   2                  break;
+  68   2              case 16:
+  69   2                  i = 4;
+  70   2                  break;
+  71   2              case 32:
+  72   2                  i = 5;
+  73   2                  break;
+  74   2              case 64:
+  75   2                  i = 6;
+  76   2                  break;
+  77   2              case 128:
+  78   2                  i = 7;
+  79   2                  break;
+  80   2              default:;
+  81   2          }
+  82   1          BIT_LED = 0;
+  83   1          SEGMENT = get_code(display_buffer[i]);
+  84   1          BIT_LED = display_bit;
+  85   1          display_bit = display_bit <= 64 ? display_bit << 1 : 1;
+  86   1      }
+  87          
+  88          sbit SCL_DS1302 = P1^0;
+  89          sbit IO_DS1302 = P1^1;
+  90          sbit RST_DS1302 = P1^2;
+  91          
+  92          unsigned char bdata data_ds1302;
+  93          sbit bit_data0 = data_ds1302^0;
+  94          sbit bit_data7 = data_ds1302^7;
+  95          
+  96          unsigned char bdata x;
+  97          sbit x0 = x^0;
+  98          sbit x7 = x^7;
+  99          
+ 100          void initial_ds1302(void) {
+ 101   1          unsigned char i;
+ 102   1          SCL_DS1302 = 0;
+ 103   1          _nop_();
+ 104   1          RST_DS1302 = 1;
+ 105   1          _nop_();
+ 106   1          _nop_();
+ 107   1          data_ds1302 = 0x8e;
+ 108   1          for (i = 1; i <= 8; i++) {
+ 109   2              SCL_DS1302 = 0;
+ 110   2              IO_DS1302 = bit_data0;
+ 111   2              _nop_();
+ 112   2              SCL_DS1302 = 1;
+ 113   2              data_ds1302 >>= 1;
+ 114   2          }
+ 115   1          data_ds1302 = 0;
+ 116   1          IO_DS1302 = 0;
+ 117   1          for (i = 1; i <= 8; i++) {
+C51 COMPILER V8.18   MAIN                                                                  03/25/2016 17:35:28 PAGE 3   
+
+ 118   2              SCL_DS1302 = 0;
+ 119   2              IO_DS1302 = bit_data0;
+ 120   2              _nop_();
+ 121   2              SCL_DS1302 = 1;
+ 122   2              data_ds1302 >>= 1;
+ 123   2          }
+ 124   1          RST_DS1302 = 0;
+ 125   1          _nop_();
+ 126   1          SCL_DS1302 = 0;
+ 127   1          SCL_DS1302 = 0;
+ 128   1          _nop_();
+ 129   1          RST_DS1302 = 1;
+ 130   1          _nop_();
+ 131   1          _nop_();
+ 132   1          data_ds1302 = 0x90;
+ 133   1          for (i = 1; i <= 8; i++) {
+ 134   2              SCL_DS1302 = 0;
+ 135   2              IO_DS1302 = bit_data0;
+ 136   2              _nop_();
+ 137   2              SCL_DS1302 = 1;
+ 138   2              data_ds1302 >>= 1;
+ 139   2          }
+ 140   1          data_ds1302 = 0xa4;
+ 141   1          for (i = 1; i <= 8; i++) {
+ 142   2              SCL_DS1302 = 0;
+ 143   2              IO_DS1302 = bit_data0;
+ 144   2              _nop_();
+ 145   2              SCL_DS1302 = 1;
+ 146   2              data_ds1302 >>= 1;
+ 147   2          }
+ 148   1          RST_DS1302 = 0;
+ 149   1          _nop_();
+ 150   1          SCL_DS1302 = 0;
+ 151   1          SCL_DS1302 = 0;
+ 152   1          _nop_();
+ 153   1          RST_DS1302 = 1;
+ 154   1          _nop_();
+ 155   1          _nop_();
+ 156   1          data_ds1302 = 0x8e;
+ 157   1          for (i = 1; i <= 8; i++) {
+ 158   2              SCL_DS1302 = 0;
+ 159   2              IO_DS1302 = bit_data0;
+ 160   2              _nop_();
+ 161   2              SCL_DS1302 = 1;
+ 162   2              data_ds1302 >>= 1;
+ 163   2          }
+ 164   1          data_ds1302 = 0x80;
+ 165   1          for (i = 1; i <= 8; i++) {
+ 166   2              SCL_DS1302 = 0;
+ 167   2              IO_DS1302 = bit_data0;
+ 168   2              _nop_();
+ 169   2              SCL_DS1302 = 1;
+ 170   2              data_ds1302 >>= 1;
+ 171   2          }
+ 172   1          RST_DS1302 = 0;
+ 173   1          _nop_();
+ 174   1          SCL_DS1302 = 0;
+ 175   1      }
+ 176          
+ 177          unsigned char read_ds1302(char command) {
+ 178   1          char i;
+ 179   1          data_ds1302 = (command << 1) | 0x81;
+C51 COMPILER V8.18   MAIN                                                                  03/25/2016 17:35:28 PAGE 4   
+
+ 180   1          SCL_DS1302 = 0;
+ 181   1          _nop_();
+ 182   1          RST_DS1302 = 1;
+ 183   1          for (i = 1; i <= 8; i++) {
+ 184   2              SCL_DS1302 = 0;
+ 185   2              IO_DS1302 = bit_data0;
+ 186   2              _nop_();
+ 187   2              SCL_DS1302 = 1;
+ 188   2              data_ds1302 >>= 1;
+ 189   2          }
+ 190   1          SCL_DS1302 = 1;
+ 191   1          for (i = 1; i <= 8; i++) {
+ 192   2              data_ds1302 >>= 1;
+ 193   2              SCL_DS1302 = 0;
+ 194   2              _nop_();
+ 195   2              bit_data7 = IO_DS1302;
+ 196   2              SCL_DS1302 = 1;
+ 197   2          }
+ 198   1          RST_DS1302 = 0;
+ 199   1          _nop_();
+ 200   1          SCL_DS1302 = 0;
+ 201   1          return data_ds1302;
+ 202   1      }
+ 203          
+ 204          void write_ds1302(unsigned char address, unsigned char numb) {
+ 205   1          char i;
+ 206   1          RST_DS1302 = 0;
+ 207   1          SCL_DS1302 = 0;
+ 208   1          RST_DS1302 = 0;
+ 209   1          RST_DS1302 = 1;
+ 210   1          data_ds1302 = 0x80 | (address << 1);
+ 211   1      
+ 212   1          for (i = 1; i <= 8; i++) {
+ 213   2              SCL_DS1302 = 0;
+ 214   2              IO_DS1302 = bit_data0;
+ 215   2              _nop_();
+ 216   2              SCL_DS1302 = 1;
+ 217   2              data_ds1302 >>= 1;
+ 218   2          }
+ 219   1          data_ds1302 = numb;
+ 220   1          for (i = 1; i <= 8; i++) {
+ 221   2              SCL_DS1302 = 0;
+ 222   2              IO_DS1302 = bit_data0;
+ 223   2              _nop_();
+ 224   2              SCL_DS1302 = 1;
+ 225   2              data_ds1302 >>= 1;
+ 226   2          }
+ 227   1          RST_DS1302 = 0;
+ 228   1          SCL_DS1302 = 1;
+ 229   1      }
+ 230          
+ 231          void open_write_bit(void) {
+ 232   1          char i;
+ 233   1          SCL_DS1302 = 0;
+ 234   1          _nop_();
+ 235   1          RST_DS1302 = 1;
+ 236   1          _nop_();
+ 237   1          _nop_();
+ 238   1          data_ds1302 = 0x8e;
+ 239   1          for (i = 1; i <= 8; i++) {
+ 240   2              SCL_DS1302 = 0;
+ 241   2              IO_DS1302 = bit_data0;
+C51 COMPILER V8.18   MAIN                                                                  03/25/2016 17:35:28 PAGE 5   
+
+ 242   2              _nop_();
+ 243   2              SCL_DS1302 = 1;
+ 244   2              data_ds1302 >>= 1;
+ 245   2          }
+ 246   1          data_ds1302 = 0;
+ 247   1          IO_DS1302 = 0;
+ 248   1          for (i = 1; i <= 8; i++) {
+ 249   2              SCL_DS1302 = 0;
+ 250   2              IO_DS1302 = bit_data0;
+ 251   2              _nop_();
+ 252   2              SCL_DS1302 = 1;
+ 253   2              data_ds1302 >>= 1;
+ 254   2          }
+ 255   1      }
+ 256          
+ 257          void close_write_bit(void) {
+ 258   1          char i;
+ 259   1          SCL_DS1302 = 0;
+ 260   1          _nop_();
+ 261   1          RST_DS1302 = 1;
+ 262   1          _nop_();
+ 263   1          _nop_();
+ 264   1          data_ds1302 = 0x8e;
+ 265   1          for (i = 1; i <= 8; i++) {
+ 266   2              SCL_DS1302 = 0;
+ 267   2              IO_DS1302 = bit_data0;
+ 268   2              _nop_();
+ 269   2              SCL_DS1302 = 1;
+ 270   2              data_ds1302 >>= 1;
+ 271   2          }
+ 272   1          data_ds1302 = 0x80;
+ 273   1          IO_DS1302 = 0;
+ 274   1          for (i = 1; i <= 8; i++) {
+ 275   2              SCL_DS1302 = 0;
+ 276   2              IO_DS1302 = bit_data0;
+ 277   2              _nop_();
+ 278   2              SCL_DS1302 = 1;
+ 279   2              data_ds1302 >>= 1;
+ 280   2          }
+ 281   1      }
+ 282          
+ 283          void read_time(void) {
+ 284   1          unsigned char second, minute, hour, d;
+ 285   1          second = 0;
+ 286   1          d = read_ds1302(second);
+ 287   1          display_buffer[0] = d & 0x0f;
+ 288   1          display_buffer[1] = d >> 4;
+ 289   1          minute = 1;
+ 290   1          d = read_ds1302(minute);
+ 291   1          display_buffer[2] = d & 0x0f;
+ 292   1          display_buffer[3] = d >> 4;
+ 293   1          hour = 2;
+ 294   1          d = read_ds1302(hour);
+ 295   1          display_buffer[4] = d & 0x0f;
+ 296   1          display_buffer[5] = d >> 4;
+ 297   1      }
+ 298          
+ 299          void set_time(void) {
+ 300   1          unsigned char data hour_address, minute_address, second_address;
+ 301   1          hour_address = 2;
+ 302   1          minute_address = 1;
+ 303   1          second_address = 0;
+C51 COMPILER V8.18   MAIN                                                                  03/25/2016 17:35:28 PAGE 6   
+
+ 304   1          open_write_bit();
+ 305   1          temp = (display_buffer[5] << 4) | display_buffer[4];
+ 306   1          write_ds1302(hour_address, temp);
+ 307   1          temp = (display_buffer[3] << 4) | display_buffer[2];
+ 308   1          write_ds1302(minute_address, temp);
+ 309   1          temp = (display_buffer[1] << 4) | display_buffer[0];
+ 310   1          write_ds1302(second_address, temp);
+ 311   1          close_write_bit();
+ 312   1      }
+ 313          
+ 314          int main() {
+ 315   1          BIT_LED = 0;
+ 316   1          temp = TMOD;
+ 317   1          temp &= 0xf0;
+ 318   1          TMOD = temp | 1;
+ 319   1          time0_times = -TIME0 * FOSC / 12;
+ 320   1          time0_h = time0_times / 256;
+ 321   1          time0_l = time0_times % 256;
+ 322   1          TH0 = time0_h;
+ 323   1          TL0 = time0_l;
+ 324   1          TR0 = EA = ET0 = 1;
+ 325   1          initial_ds1302();
+ 326   1          display_bit = 1;
+ 327   1          display_buffer[0] = 0x08;
+ 328   1          display_buffer[1] = 0x05;
+ 329   1          display_buffer[2] = 0x05;
+ 330   1          display_buffer[3] = 0x03;
+ 331   1          display_buffer[4] = 0x09;
+ 332   1          display_buffer[5] = 0x00;
+ 333   1          set_time();
+ 334   1      
+ 335   1          for (; ;) {
+ 336   2              read_time();
+ 337   2          }
+ 338   1      }
+ 339          
+ 340          void time0_int(void) interrupt 1 {
+ 341   1          TH0 = time0_h;
+ 342   1          TL0 = time0_l;
+ 343   1          display();
+ 344   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    871    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     14       1
+   IDATA SIZE       =      2    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

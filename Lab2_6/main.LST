@@ -1,0 +1,42 @@
+A51 MACRO ASSEMBLER  MAIN                                                                 03/10/2016 11:15:58 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.01
+OBJECT MODULE PLACED IN main.OBJ
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE main.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+8000                   1     org 8000h
+8000 7474              2     mov a, #74h
+8002 75F0F0            3     mov b, #0f0h
+8005 901234            4     mov dptr, #1234h
+8008 7878              5     mov r0, #78h
+800A 7979              6     mov r1, #79h
+800C 7A7A              7     mov r2, #7ah
+800E 7B7B              8     mov r3, #7bh
+8010 7C7C              9     mov r4, #7ch
+8012 7D7D             10     mov r5, #7dh
+8014 7E7E             11     mov r6, #7eh
+8016 7F7F             12     mov r7, #7fh
+8018 754030           13     mov 40h, #30h
+801B 85404E           14     mov 4eh, 40h
+801E 90E000           15     mov dptr, #0e000h
+8021 F0               16     movx @dptr, a
+8022 80FE             17     sjmp $
+                      18     end
+A51 MACRO ASSEMBLER  MAIN                                                                 03/10/2016 11:15:58 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

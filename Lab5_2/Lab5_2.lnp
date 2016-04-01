@@ -1,0 +1,7 @@
+"main.obj",
+"init_serial.obj",
+".\JXSTARTUP.obj" 
+TO "Lab5_2" 
+RAMSIZE(256) 
+CODE( 0X8000-0X9FFE )
+XDATA( 0XE000-0XFFFE )

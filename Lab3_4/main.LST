@@ -1,0 +1,46 @@
+C51 COMPILER V8.18   MAIN                                                                  03/11/2016 16:21:35 PAGE 1   
+
+
+C51 COMPILER V8.18, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <stdio.h>
+   3          
+   4          #include "init_serial.h"
+   5          
+   6          unsigned long x _at_ 0x30;
+   7          unsigned int y _at_ 0x40;
+   8          unsigned int z _at_ 0x50;
+   9          unsigned int w _at_ 0x52;
+  10          
+  11          int main() {
+  12   1              init_serial();
+  13   1              x = 0x90000000;
+  14   1              y = 0xafff;
+  15   1      
+  16   1              z = x / y;
+  17   1              w = x % y;
+  18   1      
+  19   1              printf("quotient = %X remainder = %X\n", z, w);
+  20   1              printf("quotient = %Ld remainder = %d\n", (long)z, w);
+  21   1      
+  22   1              for (; ; );
+  23   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    123    ----
+   CONSTANT SIZE    =     61    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

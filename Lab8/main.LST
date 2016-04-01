@@ -1,0 +1,64 @@
+C51 COMPILER V8.18   MAIN                                                                  03/24/2016 11:52:08 PAGE 1   
+
+
+C51 COMPILER V8.18, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <stdio.h>
+   3          #include <intrins.h>
+   4          
+   5          #include "init_serial.h"
+   6          
+   7          unsigned char xdata* AD_0809;
+   8          unsigned char bdata x, y;
+   9          sbit bit_x = x^7;
+  10          sbit bit_y = y^7;
+  11          
+  12          sbit EOC = P1^0;
+  13          
+  14          int main() {
+  15   1              unsigned char (*p)();
+  16   1              unsigned char* display_buffer;
+  17   1              unsigned char n;
+  18   1      
+  19   1              init_serial();
+  20   1      
+  21   1              display_buffer = 0xc5;
+  22   1              AD_0809 = 0x7fd0;
+  23   1              p = 0x13c1;
+  24   1              EOC = 1;
+  25   1      
+  26   1              for (n = 0; n <= 5; n++) {
+  27   2                      display_buffer[n] = 0x10;
+  28   2              }
+  29   1      
+  30   1              for (; ; ) {
+  31   2                      *AD_0809 = 5;  
+  32   2                      while (EOC);
+  33   2                      while (!EOC);
+  34   2                      n = *AD_0809;
+  35   2                      display_buffer[0] = n >> 4;
+  36   2                      display_buffer[1] = n & 0xf;
+  37   2                      printf("n = %bx\n", n);
+  38   2                      p();
+  39   2                      p();
+  40   2              }
+  41   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    136    ----
+   CONSTANT SIZE    =      9    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4       7
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

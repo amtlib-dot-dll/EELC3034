@@ -1,0 +1,32 @@
+C51 COMPILER V8.18   INIT_SERIAL                                                           03/31/2016 10:11:57 PAGE 1   
+
+
+C51 COMPILER V8.18, COMPILATION OF MODULE INIT_SERIAL
+OBJECT MODULE PLACED IN init_serial.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE init_serial.c INTVECTOR(0X8000) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          
+   3          void init_serial(void) {
+   4   1              SCON = 0x52;
+   5   1              TMOD = 0x20;
+   6   1              TCON = 0x69;
+   7   1              TH1 = 0xF3;                          
+   8   1              TR1 = 1;
+   9   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     15    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,6 @@
+"main.obj",
+".\JXSTARTUP.obj" 
+TO "Lab2_7" 
+RAMSIZE(256) 
+CODE( 0X8000-0X9FFE )
+XDATA( 0XE000-0XFFFE )

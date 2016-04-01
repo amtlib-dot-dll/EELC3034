@@ -1,0 +1,4 @@
+"init_serial.obj",
+"main.obj" 
+TO "Lab4_4" 
+RAMSIZE(256) 

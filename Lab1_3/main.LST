@@ -1,0 +1,30 @@
+A51 MACRO ASSEMBLER  MAIN                                                                 03/10/2016 10:21:02 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.01
+OBJECT MODULE PLACED IN main.OBJ
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE main.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     loop:
+0000 B290              2     cpl p1.0
+0002 00                3     nop
+0003 80FB              4     sjmp loop
+                       5     end
+A51 MACRO ASSEMBLER  MAIN                                                                 03/10/2016 10:21:02 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+LOOP . . . . . . .  C ADDR   0000H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
