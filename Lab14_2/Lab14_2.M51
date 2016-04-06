@@ -1,0 +1,355 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        04/06/2016  21:28:16  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE .\JXSTARTUP.obj, main.obj, init_serial.obj TO Lab14_2 RAMSIZE (256) CODE (0X8000-0X9FFE) XDATA 
+>> (0XE000-0XFFFE)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\JXSTARTUP.obj (?C_STARTUP)
+  main.obj (MAIN)
+  init_serial.obj (INIT_SERIAL)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+  C:\KEIL\C51\LIB\C51S.LIB (PRINTF)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CLDPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CSTPTR)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?PLDIIDATA)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?CCASE)
+  C:\KEIL\C51\LIB\C51S.LIB (PUTCHAR)
+
+
+LINK MAP OF MODULE:  Lab14_2 (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0016H     UNIT         _DATA_GROUP_
+            DATA    001EH     0001H     UNIT         ?DT?MAIN
+                    001FH     0001H                  *** GAP ***
+            DATA    0020H     0001H     BIT_ADDR     ?BA?MAIN
+            BIT     0021H.0   0001H.1   UNIT         _BIT_GROUP_
+                    0022H.1   0000H.7                *** GAP ***
+            IDATA   0023H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+                    0000H     8000H                  *** GAP ***
+            CODE    8000H     0003H     ABSOLUTE     
+            CODE    8003H     035CH     UNIT         ?PR?PRINTF?PRINTF
+            CODE    835FH     008EH     UNIT         ?C?LIB_CODE
+            CODE    83EDH     008CH     UNIT         ?C_C51STARTUP
+            CODE    8479H     004DH     UNIT         ?PR?MAIN?MAIN
+            CODE    84C6H     0031H     UNIT         ?PR?_RD_PCA9557?MAIN
+            CODE    84F7H     0027H     UNIT         ?PR?PUTCHAR?PUTCHAR
+            CODE    851EH     0018H     UNIT         ?PR?_DELAY?MAIN
+            CODE    8536H     0017H     UNIT         ?PR?ACK?MAIN
+            CODE    854DH     0017H     UNIT         ?PR?_SHIFT8?MAIN
+            CODE    8564H     0015H     UNIT         ?PR?_WR_PCA9557?MAIN
+            CODE    8579H     000FH     UNIT         ?PR?INIT_SERIAL?INIT_SERIAL
+            CODE    8588H     0009H     UNIT         ?PR?START?MAIN
+            CODE    8591H     0007H     UNIT         ?PR?STOP?MAIN
+            CODE    8598H     0007H     UNIT         ?CO?MAIN
+            CODE    859FH     0004H     UNIT         ?C_INITSEG
+
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/06/2016  21:28:16  PAGE 2
+
+
+
+OVERLAY MAP OF MODULE:   Lab14_2 (?C_STARTUP)
+
+
+SEGMENT                                BIT_GROUP          DATA_GROUP 
+  +--> CALLED SEGMENT               START    LENGTH     START    LENGTH
+-----------------------------------------------------------------------
+?C_C51STARTUP                       -----    -----      -----    -----
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN                       -----    -----      0008H    0002H
+  +--> ?PR?INIT_SERIAL?INIT_SERIAL
+  +--> ?PR?_WR_PCA9557?MAIN
+  +--> ?PR?_RD_PCA9557?MAIN
+  +--> ?CO?MAIN
+  +--> ?PR?PRINTF?PRINTF
+  +--> ?PR?_DELAY?MAIN
+
+?PR?_WR_PCA9557?MAIN                -----    -----      -----    -----
+  +--> ?PR?ACK?MAIN
+  +--> ?PR?_SHIFT8?MAIN
+  +--> ?PR?STOP?MAIN
+
+?PR?ACK?MAIN                        -----    -----      -----    -----
+  +--> ?PR?START?MAIN
+  +--> ?PR?_SHIFT8?MAIN
+
+?PR?_RD_PCA9557?MAIN                -----    -----      -----    -----
+  +--> ?PR?ACK?MAIN
+  +--> ?PR?START?MAIN
+  +--> ?PR?_SHIFT8?MAIN
+  +--> ?PR?STOP?MAIN
+
+?PR?PRINTF?PRINTF                   0021H.0  0001H.1    000AH    0014H
+  +--> ?PR?PUTCHAR?PUTCHAR
+
+
+
+SYMBOL TABLE OF MODULE:  Lab14_2 (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:83EDH         SEGMENT       ?C_C51STARTUP
+  I:0023H         SEGMENT       ?STACK
+  C:8000H         PUBLIC        ?C_STARTUP
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:83F0H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0000H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/06/2016  21:28:16  PAGE 3
+
+
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:0081H         SYMBOL        SP
+  C:83EDH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:8000H         LINE#         80
+  C:83EDH         LINE#         87
+  C:83EFH         LINE#         88
+  C:83F0H         LINE#         89
+  C:83F1H         LINE#         90
+  C:83F3H         LINE#         139
+  C:83F6H         LINE#         140
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  C:851EH         PUBLIC        _delay
+  D:00B8H         PUBLIC        IP
+  D:001EH         PUBLIC        slave_addr
+  C:8479H         PUBLIC        main
+  C:84C6H         PUBLIC        _RD_PCA9557
+  C:8548H         PUBLIC        ack
+  C:8588H         PUBLIC        start
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:8564H         PUBLIC        _WR_PCA9557
+  D:0020H         PUBLIC        com_data
+  C:8591H         PUBLIC        stop
+  C:854DH         PUBLIC        _shift8
+  D:00C8H         PUBLIC        T2CON
+  B:00B0H.2       PUBLIC        SDA_PCA9557
+  B:0020H.7       PUBLIC        mos_bit
+  B:00B0H.3       PUBLIC        SCL_PCA9557
+  B:0020H.0       PUBLIC        low_bit
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        n
+  -------         DO            
+  D:0004H         SYMBOL        i
+  -------         ENDDO         
+  C:851EH         LINE#         28
+  C:851EH         LINE#         30
+  C:8535H         LINE#         31
+  -------         ENDPROC       _DELAY
+  -------         PROC          START
+  C:8588H         LINE#         33
+  C:8588H         LINE#         34
+  C:858AH         LINE#         35
+  C:858CH         LINE#         36
+  C:858EH         LINE#         37
+  C:8590H         LINE#         38
+  -------         ENDPROC       START
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/06/2016  21:28:16  PAGE 4
+
+
+  -------         PROC          STOP
+  C:8591H         LINE#         40
+  C:8591H         LINE#         41
+  C:8593H         LINE#         42
+  C:8595H         LINE#         43
+  C:8597H         LINE#         44
+  -------         ENDPROC       STOP
+  -------         PROC          L?0023
+  -------         ENDPROC       L?0023
+  -------         PROC          ACK
+  C:8548H         LINE#         46
+  C:8548H         LINE#         47
+  C:854AH         LINE#         48
+  C:854CH         LINE#         49
+  -------         ENDPROC       ACK
+  -------         PROC          _SHIFT8
+  D:0007H         SYMBOL        a
+  -------         DO            
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:854DH         LINE#         51
+  C:854DH         LINE#         53
+  C:854FH         LINE#         54
+  C:8551H         LINE#         55
+  C:8555H         LINE#         56
+  C:8557H         LINE#         57
+  C:8559H         LINE#         58
+  C:855FH         LINE#         59
+  C:8563H         LINE#         60
+  -------         ENDPROC       _SHIFT8
+  -------         PROC          _RD_PCA9557
+  D:0006H         SYMBOL        slave_addr
+  D:0005H         SYMBOL        command
+  -------         DO            
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:84C6H         LINE#         62
+  C:84C8H         LINE#         64
+  C:84C8H         LINE#         65
+  C:84C8H         LINE#         66
+  C:84C8H         LINE#         67
+  C:84C8H         LINE#         68
+  C:84C8H         LINE#         69
+  C:84C8H         LINE#         70
+  C:84CBH         LINE#         71
+  C:84CEH         LINE#         72
+  C:84D5H         LINE#         73
+  C:84D8H         LINE#         74
+  C:84DAH         LINE#         75
+  C:84DCH         LINE#         76
+  C:84E2H         LINE#         77
+  C:84E4H         LINE#         78
+  C:84E8H         LINE#         79
+  C:84EAH         LINE#         80
+  C:84EEH         LINE#         81
+  C:84F1H         LINE#         82
+  C:84F4H         LINE#         83
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/06/2016  21:28:16  PAGE 5
+
+
+  C:84F6H         LINE#         84
+  -------         ENDPROC       _RD_PCA9557
+  -------         PROC          _WR_PCA9557
+  D:0006H         SYMBOL        slave_addr
+  D:0005H         SYMBOL        command
+  D:0004H         SYMBOL        data_in
+  C:8564H         LINE#         86
+  C:8568H         LINE#         87
+  C:8569H         LINE#         88
+  C:8569H         LINE#         89
+  C:8569H         LINE#         90
+  C:8569H         LINE#         91
+  C:8569H         LINE#         92
+  C:8569H         LINE#         93
+  C:8569H         LINE#         94
+  C:856CH         LINE#         95
+  C:8571H         LINE#         96
+  C:8574H         LINE#         97
+  C:8577H         LINE#         98
+  C:8578H         LINE#         99
+  -------         ENDPROC       _WR_PCA9557
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        data_rd
+  D:0009H         SYMBOL        data_wr
+  -------         ENDDO         
+  C:8479H         LINE#         101
+  C:8479H         LINE#         105
+  C:847CH         LINE#         107
+  C:847FH         LINE#         108
+  C:8482H         LINE#         109
+  C:848BH         LINE#         110
+  C:8491H         LINE#         111
+  C:8491H         LINE#         112
+  C:8496H         LINE#         113
+  C:849FH         LINE#         115
+  C:84ABH         LINE#         116
+  C:84B2H         LINE#         117
+  C:84B9H         LINE#         118
+  C:84BFH         LINE#         119
+  C:84C1H         LINE#         120
+  C:84C4H         LINE#         121
+  C:84C4H         LINE#         122
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        INIT_SERIAL
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:8579H         PUBLIC        init_serial
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  D:008DH         PUBLIC        TH1
+BL51 BANKED LINKER/LOCATER V6.22                                                      04/06/2016  21:28:16  PAGE 6
+
+
+  B:0088H.6       PUBLIC        TR1
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          INIT_SERIAL
+  C:8579H         LINE#         3
+  C:8579H         LINE#         4
+  C:857CH         LINE#         5
+  C:857FH         LINE#         6
+  C:8582H         LINE#         7
+  C:8585H         LINE#         8
+  C:8587H         LINE#         9
+  -------         ENDPROC       INIT_SERIAL
+  -------         ENDMOD        INIT_SERIAL
+
+  -------         MODULE        PRINTF
+  D:000AH         PUBLIC        ?_PRINTF517?BYTE
+  D:000AH         PUBLIC        ?_PRINTF?BYTE
+  D:000AH         PUBLIC        ?_SPRINTF517?BYTE
+  D:000AH         PUBLIC        ?_SPRINTF?BYTE
+  C:8065H         PUBLIC        _PRINTF
+  C:8065H         PUBLIC        _PRINTF517
+  C:805FH         PUBLIC        _SPRINTF
+  C:805FH         PUBLIC        _SPRINTF517
+  -------         ENDMOD        PRINTF
+
+  -------         MODULE        ?C?CLDPTR
+  C:835FH         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?CLDOPTR
+  C:8378H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?CSTPTR
+  C:83A5H         PUBLIC        ?C?CSTPTR
+  -------         ENDMOD        ?C?CSTPTR
+
+  -------         MODULE        ?C?PLDIIDATA
+  C:83B7H         PUBLIC        ?C?PLDIIDATA
+  -------         ENDMOD        ?C?PLDIIDATA
+
+  -------         MODULE        ?C?CCASE
+  C:83C7H         PUBLIC        ?C?CCASE
+  -------         ENDMOD        ?C?CCASE
+
+  -------         MODULE        PUTCHAR
+  C:84F7H         PUBLIC        _PUTCHAR
+  -------         ENDMOD        PUTCHAR
+
+Program Size: data=34.1 xdata=0 code=1443
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

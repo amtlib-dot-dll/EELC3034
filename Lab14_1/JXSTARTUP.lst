@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  JXSTARTUP                                                            04/06/2016 18:53:44 PAGE     1
+A51 MACRO ASSEMBLER  JXSTARTUP                                                            04/06/2016 21:24:26 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.02
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
                       55     ;
                       56     ;  Page Definition for Using the Compact Model with 64 KByte xdata RAM
                       57     ;
-A51 MACRO ASSEMBLER  JXSTARTUP                                                            04/06/2016 18:53:44 PAGE     2
+A51 MACRO ASSEMBLER  JXSTARTUP                                                            04/06/2016 21:24:26 PAGE     2
 
                       58     ;  The following EQU statements define the xdata page used for pdata
                       59     ;  variables. The EQU PPAGE must conform with the PPAGE control used
@@ -133,7 +133,7 @@ LOC  OBJ            LINE     SOURCE
                      121     IF IBPSTACK <> 0
                              EXTRN DATA (?C_IBP)
                              
-A51 MACRO ASSEMBLER  JXSTARTUP                                                            04/06/2016 18:53:44 PAGE     3
+A51 MACRO ASSEMBLER  JXSTARTUP                                                            04/06/2016 21:24:26 PAGE     3
 
                                              MOV     ?C_IBP,#LOW IBPSTACKTOP
                              ENDIF
@@ -154,7 +154,7 @@ LOC  OBJ            LINE     SOURCE
 0009 020000   F      140                     LJMP    ?C_START
                      141     
                      142                     END
-A51 MACRO ASSEMBLER  JXSTARTUP                                                            04/06/2016 18:53:44 PAGE     4
+A51 MACRO ASSEMBLER  JXSTARTUP                                                            04/06/2016 21:24:26 PAGE     4
 
 SYMBOL TABLE LISTING
 ------ ----- -------

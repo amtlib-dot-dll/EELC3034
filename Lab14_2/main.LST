@@ -1,0 +1,150 @@
+C51 COMPILER V9.01   MAIN                                                                  04/06/2016 21:28:16 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c INTVECTOR(0X8000) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <stdio.h>
+   3          #include <intrins.h>
+   4          #include <absacc.h>
+   5          
+   6          #include "init_serial.h"
+   7          
+   8          #define OUTPUT 0
+   9          #define INPUT 0xff
+  10          #define OUT_IN 0xf
+  11          #define WR 0
+  12          #define RD 1
+  13          #define INVERT 0xff
+  14          #define NOINVERT 0
+  15          #define Input_reg 0
+  16          #define Output_reg 1
+  17          #define Polar_reg 2
+  18          #define Config_reg 3
+  19          
+  20          sbit SCL_PCA9557 = P3^3;
+  21          sbit SDA_PCA9557 = P3^2;
+  22          unsigned char bdata com_data;
+  23          sbit mos_bit = com_data^7;
+  24          sbit low_bit = com_data^0;
+  25          
+  26          unsigned char slave_addr = 0x30;
+  27          
+  28          void delay(int n) {
+  29   1          int i;
+  30   1          for (i = 0; i < n; i++);
+  31   1      }
+  32          
+  33          void start() {
+  34   1          SDA_PCA9557 = 1;
+  35   1          SCL_PCA9557 = 1;
+  36   1          SDA_PCA9557 = 0;
+  37   1          SCL_PCA9557 = 0;
+  38   1      }
+  39          
+  40          void stop() {
+  41   1          SDA_PCA9557 = 0;
+  42   1          SCL_PCA9557 = 1;
+  43   1          SDA_PCA9557 = 1;
+  44   1      }
+  45          
+  46          void ack() {
+  47   1          SCL_PCA9557 = 1;
+  48   1          SCL_PCA9557 = 0;
+  49   1      }
+  50          
+  51          void shift8(char a) {
+  52   1          unsigned char i;
+  53   1          com_data = a;
+  54   1          for (i = 0; i < 8; i++) {
+  55   2              SDA_PCA9557 = mos_bit;
+C51 COMPILER V9.01   MAIN                                                                  04/06/2016 21:28:16 PAGE 2   
+
+  56   2              SCL_PCA9557 = 1;
+  57   2              SCL_PCA9557 = 0;
+  58   2              com_data *= 2;
+  59   2          }
+  60   1      }
+  61          
+  62          unsigned char RD_PCA9557(char slave_addr, char command) {
+  63   1          unsigned char i;
+  64   1          SDA_PCA9557 = 1;
+  65   1          SCL_PCA9557 = 0;
+  66   1          start();
+  67   1          shift8(slave_addr);
+  68   1          ack();
+  69   1          shift8(command);
+  70   1          ack();
+  71   1          start();
+  72   1          shift8(slave_addr | RD);
+  73   1          ack();
+  74   1          SDA_PCA9557 = 1;
+  75   1          for (i = 0; i < 8; i++) {
+  76   2              com_data *= 2;
+  77   2              SCL_PCA9557 = 1;
+  78   2              low_bit = SDA_PCA9557;
+  79   2              SCL_PCA9557 = 0;
+  80   2          }
+  81   1          ack();
+  82   1          stop();
+  83   1          return com_data;
+  84   1      }
+  85          
+  86          void WR_PCA9557(char slave_addr, char command, char data_in) {
+  87   1          _nop_();
+  88   1          SDA_PCA9557 = 1;
+  89   1          SCL_PCA9557 = 0;
+  90   1          start();
+  91   1          shift8(slave_addr);
+  92   1          ack();
+  93   1          shift8(command);
+  94   1          ack();
+  95   1          shift8(data_in);
+  96   1          ack();
+  97   1          stop();
+  98   1          _nop_();
+  99   1      }
+ 100          
+ 101          void main() {
+ 102   1          unsigned char data_rd;
+ 103   1          unsigned char data_wr;
+ 104   1      
+ 105   1          init_serial();
+ 106   1      
+ 107   1          data_rd = 0;
+ 108   1          data_wr = 1;
+ 109   1          WR_PCA9557(slave_addr, Config_reg, INPUT);
+ 110   1          WR_PCA9557(slave_addr, Polar_reg, INVERT);
+ 111   1          for (; ;) {
+ 112   2              P1 = ~data_wr;
+ 113   2              data_rd = RD_PCA9557(slave_addr, Input_reg);
+ 114   2      
+ 115   2              printf("%.2bX\n", data_rd);
+ 116   2              delay(20000);
+ 117   2              if (data_wr < 0x80) {
+C51 COMPILER V9.01   MAIN                                                                  04/06/2016 21:28:16 PAGE 3   
+
+ 118   3                  data_wr <<= 1;
+ 119   3              } else {
+ 120   3                  data_wr = 1;
+ 121   3              }
+ 122   2          }
+ 123   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    233    ----
+   CONSTANT SIZE    =      7    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

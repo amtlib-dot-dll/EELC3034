@@ -1,0 +1,20 @@
+<html>
+<body>
+<pre>
+<h1>µVision3 Build Log</h1>
+<h2>Project:</h2>
+D:\Lab14_2\Lab14_2.uv2
+Project File Date:  04/06/2016
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling JXSTARTUP.A51...
+compiling main.c...
+compiling init_serial.c...
+linking...
+Program Size: data=34.1 xdata=0 code=1443
+creating hex file from "Lab14_2"...
+"Lab14_2" - 0 Error(s), 0 Warning(s).
+</pre>
+</body>
+</html>

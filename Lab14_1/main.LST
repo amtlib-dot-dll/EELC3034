@@ -1,0 +1,113 @@
+C51 COMPILER V9.01   MAIN                                                                  04/06/2016 21:24:26 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c INTVECTOR(0X8000) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <stdio.h>
+   3          #include <intrins.h>
+   4          #include <absacc.h>
+   5          
+   6          #define OUTPUT 0
+   7          #define INPUT 0xff
+   8          #define OUT_IN 0xf
+   9          #define WR 0
+  10          #define RD 1
+  11          #define INVERT 0xff
+  12          #define NOINVERT 0
+  13          #define Input_reg 0
+  14          #define Output_reg 1
+  15          #define Polar_reg 2
+  16          #define Config_reg 3
+  17          
+  18          sbit SCL_PCA9557 = P3^3;
+  19          sbit SDA_PCA9557 = P3^2;
+  20          bdata char com_data;
+  21          sbit mos_bit = com_data^7;
+  22          sbit low_bit = com_data^0;
+  23          
+  24          unsigned char slave_addr = 0x30;
+  25          
+  26          void delay(int n) {
+  27   1          int i;
+  28   1          for (i = 0; i < n; i++);
+  29   1      }
+  30          
+  31          void start() {
+  32   1          SDA_PCA9557 = 1;
+  33   1          SCL_PCA9557 = 1;
+  34   1          SDA_PCA9557 = 0;
+  35   1          SCL_PCA9557 = 0;
+  36   1      }
+  37          
+  38          void stop() {
+  39   1          SDA_PCA9557 = 0;
+  40   1          SCL_PCA9557 = 1;
+  41   1          SDA_PCA9557 = 1;
+  42   1      }
+  43          
+  44          void ack() {
+  45   1          SCL_PCA9557 = 1;
+  46   1          SCL_PCA9557 = 0;
+  47   1      }
+  48          
+  49          void shift8(char a) {
+  50   1          unsigned char i;
+  51   1          com_data = a;
+  52   1          for (i = 0; i < 8; i++) {
+  53   2              SDA_PCA9557 = mos_bit;
+  54   2              SCL_PCA9557 = 1;
+  55   2              SCL_PCA9557 = 0;
+C51 COMPILER V9.01   MAIN                                                                  04/06/2016 21:24:26 PAGE 2   
+
+  56   2              com_data *= 2;
+  57   2          }
+  58   1      }
+  59          
+  60          void WR_PCA9557(char slave_addr, char command, char data_in) {
+  61   1          _nop_();
+  62   1          SDA_PCA9557 = 1;
+  63   1          SCL_PCA9557 = 0;
+  64   1          start();
+  65   1          shift8(slave_addr);
+  66   1          ack();
+  67   1          shift8(command);
+  68   1          ack();
+  69   1          shift8(data_in);
+  70   1          ack();
+  71   1          stop();
+  72   1          _nop_();
+  73   1      }
+  74          
+  75          void main() {
+  76   1          unsigned char data_wr;
+  77   1          data_wr = 1;
+  78   1          for (; ;) {
+  79   2              WR_PCA9557(slave_addr, Config_reg, OUTPUT);
+  80   2              WR_PCA9557(slave_addr, Output_reg, ~data_wr);
+  81   2              delay(20000);
+  82   2              if (data_wr < 0x80) {
+  83   3                  data_wr <<= 1;
+  84   3              } else {
+  85   3                  data_wr = 1;
+  86   3              }
+  87   2          }
+  88   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    148    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

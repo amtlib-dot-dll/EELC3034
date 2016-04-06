@@ -18,6 +18,10 @@ unsigned char data display_buffer[3] _at_ 0x40;
 unsigned char data b_buffer[3] _at_ 0x50;
 unsigned char idata a_buffer[6] _at_ 0xc5;
 
+unsigned char (*r)();
+
+unsigned char i;
+
 void delay(int n) {
     int i;
     for (i = 0; i < n; i++);
@@ -96,14 +100,7 @@ void wr_24c01(char a, char b) {
     WP_IC_CARD = 1;
 }
 
-int main() {
-    unsigned char i;
-    unsigned char (*r)();
-    init_serial();
-    WP_IC_CARD = 1;
-    r = 0x13c1;
-    printf("\n");
-
+void action(void) {
     for (i = 0; i <= 2; i++) {
         wr_24c01(i, display_buffer[i]);
         delay(250);
@@ -116,11 +113,33 @@ int main() {
         delay(250);
     }
 
+}
+
+int main() {
+    init_serial();
+
+    r = 0x13c1;
+
+	EA = 1;
+	EX0 = 1;
+	IT0 = 1;
+
+    WP_IC_CARD = 1;
+    printf("\n");
+
+	action();
+
     for (; ;) {
-        for (i = 0; i <= 2; i++) {
-            a_buffer[2 * i] = (b_buffer[i] & 0xf0) >> 4;
-            a_buffer[2 * i + 1] = b_buffer[i] & 0xf;
-        }
-        r();
+	    for (i = 0; i <= 2; i++) {
+	        a_buffer[2 * i] = (b_buffer[i] & 0xf0) >> 4;
+	        a_buffer[2 * i + 1] = b_buffer[i] & 0xf;
+	    }
+	    r();
     }
 }
+
+void key_int(void) interrupt 0 {
+	display_buffer[0]++;
+	action();
+}
+		 
