@@ -1,0 +1,80 @@
+A51 MACRO ASSEMBLER  MAIN                                                                 04/20/2016 15:57:33 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.01
+OBJECT MODULE PLACED IN main.OBJ
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE main.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     
+                       2     
+0000                   3     org 0000h
+0000 020100            4     ljmp main
+0100                   5     org 0100h
+                       6     
+                       7     
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+                             
+0100                  31     main:
+0100 209710           32     jb p1.7,setled
+                      33     
+0103 C290             34     clr p1.0
+0105 C291             35     clr p1.1
+0107 C292             36     clr p1.2
+0109 C293             37     clr p1.3
+010B C294             38     clr p1.4
+010D C295             39     clr p1.5
+010F C296             40     clr p1.6
+0111 80ED             41     sjmp main
+                      42     
+0113                  43     setled:
+0113 D290             44     setb p1.0
+0115 D291             45     setb p1.1
+0117 D292             46     setb p1.2
+0119 D293             47     setb p1.3
+011B D294             48     setb p1.4
+011D D295             49     setb p1.5
+011F D296             50     setb p1.6
+0121 80DD             51     sjmp main
+                      52     
+                      53     
+                      54     end
+A51 MACRO ASSEMBLER  MAIN                                                                 04/20/2016 15:57:33 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+MAIN . . . . . . .  C ADDR   0100H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+SETLED . . . . . .  C ADDR   0113H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

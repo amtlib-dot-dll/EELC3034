@@ -1,0 +1,96 @@
+A51 MACRO ASSEMBLER  MAIN                                                                 04/20/2016 17:13:05 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.01
+OBJECT MODULE PLACED IN main.OBJ
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE main.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+  0030                 1     second equ 30h
+  0031                 2     count equ 31h
+                       3     
+0000                   4     org 00h
+0000 02000E            5     ljmp start
+                       6     
+000B                   7     org 0bh
+000B 020032            8     ljmp int_t0
+                       9     
+000E                  10     start:
+000E 753000           11     mov second,#00h
+0011 753100           12     mov count,#00h
+                      13     
+0014 90005B           14     mov dptr, #table
+0017 758000           15     mov p0, #0
+001A 75A000           16     mov p2, #0
+001D 758900           17     mov tmod, #0
+0020 758C3C           18     mov th0,#(65536-50000)/256
+0023 758AB0           19     mov tl0,#(65536-50000) mod 256
+0026 D28C             20     setb tr0
+0028 D2A9             21     setb et0
+002A D2AF             22     setb ea
+                      23     
+002C 75A882           24     mov ie,#82h
+002F 02002F           25     ljmp $
+                      26     
+0032                  27     int_t0:
+0032 758C3C           28     mov th0,#(65536-50000)/256
+0035 758AB0           29     mov tl0,#(65536-50000) mod 256
+0038 0531             30     inc count
+003A E531             31     mov a,count
+003C B4141B           32     cjne a,#20,i2
+003F 753100           33     mov count,#00h
+0042 0530             34     inc second
+0044 E530             35     mov a,second
+0046 B43C03           36     cjne a,#60,i1
+0049 753000           37     mov second,#00h
+004C                  38     i1:
+004C E530             39     mov a,second
+004E 75F00A           40     mov b,#10
+0051 84               41     div ab
+0052 93               42     movc a,@a+dptr
+0053 F580             43     mov p0,a
+0055 E5F0             44     mov a,b
+0057 93               45     movc a,@a+dptr
+0058 F5A0             46     mov p2,a
+005A                  47     i2:
+005A 32               48     reti
+                      49     
+005B                  50     table:
+005B 3F065B4F         51     db 3fh,06h,5bh,4fh,66h
+005F 66                      
+0060 6D7D077F         52     db 6dh,7dh,07h,7fh,6fh
+0064 6F                      
+                      53     
+                      54     end
+A51 MACRO ASSEMBLER  MAIN                                                                 04/20/2016 17:13:05 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+COUNT. . . . . . .  N NUMB   0031H   A   
+EA . . . . . . . .  B ADDR   00A8H.7 A   
+ET0. . . . . . . .  B ADDR   00A8H.1 A   
+I1 . . . . . . . .  C ADDR   004CH   A   
+I2 . . . . . . . .  C ADDR   005AH   A   
+IE . . . . . . . .  D ADDR   00A8H   A   
+INT_T0 . . . . . .  C ADDR   0032H   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+SECOND . . . . . .  N NUMB   0030H   A   
+START. . . . . . .  C ADDR   000EH   A   
+TABLE. . . . . . .  C ADDR   005BH   A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

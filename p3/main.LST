@@ -1,0 +1,60 @@
+A51 MACRO ASSEMBLER  MAIN                                                                 04/20/2016 16:07:52 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.01
+OBJECT MODULE PLACED IN main.OBJ
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE main.asm SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+  0090                 1     clk equ p1.0
+  0091                 2     dina equ p1.1
+  0092                 3     dinb equ p1.2
+  0093                 4     clr164 equ p1.3
+                       5     
+0000                   6     org 0000h
+0000 020100            7     ljmp main
+0100                   8     org 0100h
+                       9     
+0100                  10     main:
+0100 758160           11     mov sp,#60h
+0103 00               12     nop
+0104 C290             13     clr clk
+0106 D292             14     setb dinb
+0108 C293             15     clr clr164
+010A D293             16     setb clr164
+010C 745B             17     mov a,#05bh
+010E 7C08             18     mov r4,#08h
+0110                  19     slchg:
+0110 33               20     rlc a
+0111 9291             21     mov dina,c
+0113 D290             22     setb clk
+0115 00               23     nop
+0116 C290             24     clr clk
+0118 00               25     nop
+0119 DCF5             26     djnz r4,slchg
+011B 80FE             27     sjmp $
+                      28     
+                      29     end
+A51 MACRO ASSEMBLER  MAIN                                                                 04/20/2016 16:07:52 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+CLK. . . . . . . .  B ADDR   0090H.0 A   
+CLR164 . . . . . .  B ADDR   0090H.3 A   
+DINA . . . . . . .  B ADDR   0090H.1 A   
+DINB . . . . . . .  B ADDR   0090H.2 A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+SLCHG. . . . . . .  C ADDR   0110H   A   
+SP . . . . . . . .  D ADDR   0081H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
